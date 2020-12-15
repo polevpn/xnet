@@ -8,8 +8,6 @@ import (
 	"net"
 	"strings"
 	"unicode/utf8"
-
-	"golang.org/x/net/idna"
 )
 
 var isTokenTable = [127]bool{
@@ -332,12 +330,6 @@ func PunycodeHostPort(v string) (string, error) {
 		// to the caller.
 		host = v
 		port = ""
-	}
-	host, err = idna.ToASCII(host)
-	if err != nil {
-		// Non-UTF-8? Not representable in Punycode, in any
-		// case.
-		return "", err
 	}
 	if port == "" {
 		return host, nil

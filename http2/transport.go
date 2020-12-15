@@ -31,9 +31,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"golang.org/x/net/http/httpguts"
-	"golang.org/x/net/http2/hpack"
-	"golang.org/x/net/idna"
+	"github.com/polevpn/xnet/http/httpguts"
+	"github.com/polevpn/xnet/http2/hpack"
 )
 
 const (
@@ -450,9 +449,9 @@ func authorityAddr(scheme string, authority string) (addr string) {
 		}
 		host = authority
 	}
-	if a, err := idna.ToASCII(host); err == nil {
-		host = a
-	}
+	// if a, err := idna.ToASCII(host); err == nil {
+	// 	host = a
+	// }
 	// IPv6 address literal, without a port:
 	if strings.HasPrefix(host, "[") && strings.HasSuffix(host, "]") {
 		return host + ":" + port
@@ -1148,9 +1147,9 @@ func (cc *ClientConn) roundTrip(req *http.Request) (res *http.Response, gotErrAf
 			// we can keep it.
 			bodyWriter.cancel()
 			cs.abortRequestBodyWrite(errStopReqBodyWrite)
-			if hasBody && !bodyWritten {
-				<-bodyWriter.resc
-			}
+			// if hasBody && !bodyWritten {
+			// 	<-bodyWriter.resc
+			// }
 		}
 		if re.err != nil {
 			cc.forgetStreamID(cs.ID)
